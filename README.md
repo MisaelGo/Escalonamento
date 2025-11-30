@@ -7,7 +7,7 @@
 <hr>
 
 <div>
-  <h2>🧑‍💻 Contribuição Popular (Equipe)</h2>
+  <h2>🧑‍💻 Contribuição (Equipe)</h2>
   <ul>
     <li><strong>Misael Gomes</strong> — Coordenador da equipe</li>
     <li><strong>Vitor Santos &amp; Henrique Soares</strong> — Programadores do <code>main.c</code></li>
