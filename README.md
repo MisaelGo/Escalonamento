@@ -1,133 +1,277 @@
-# Escalonamento
-Implementação de operações elementares de matriz, escalonamento RREF e leitura de matrizes em C.
+<div align="center">
+  <h1>📘 Escalonamento — Motor de Matrizes em C</h1>
+  <p><strong>Implementação de operações elementares de matriz, escalonamento RREF e leitura de matrizes em C.</strong></p>
+  <p><strong>Arquivo principal:</strong> <code>main.c</code></p>
+</div>
 
-Arquivo principal: main.c
+<hr>
 
-🧑‍💻 Contribuição Popular (Equipe)
-Misael Gomes — Coordenador da equipe
-Vitor Santos & Henrique Soares — Programadores do main.c
-Alyyson — Suporte Matemático e testes
+<div>
+  <h2>🧑‍💻 Contribuição Popular (Equipe)</h2>
+  <ul>
+    <li><strong>Misael Gomes</strong> — Coordenador da equipe</li>
+    <li><strong>Vitor Santos &amp; Henrique Soares</strong> — Programadores do <code>main.c</code></li>
+    <li><strong>Alyyson</strong> — Suporte Matemático e testes</li>
+  </ul>
+</div>
 
-📌 Visão Geral
-Este projeto implementa um motor completo de operações matriciais, com foco na redução por linhas (RREF – Reduced Row Echelon Form) utilizando operações elementares clássicas da Álgebra Linear.
+<hr>
 
-O arquivo matriz_definitiva4.c contém todo o núcleo lógico do sistema:
-✔ Estrutura de dados otimizada
-✔ Criação/gerenciamento de matrizes
-✔ Operações elementares
-✔ Escalonamento (Gauss-Jordan) estável
-✔ Leitura de múltiplas matrizes via arquivo
-✔ Geração de matrizes aleatórias
-✔ Interface textual interativa
+<div>
+  <h2>📌 Visão Geral</h2>
+  <p>
+    Este projeto implementa um motor completo de operações matriciais, com foco na 
+    <strong>redução por linhas (RREF – Reduced Row Echelon Form)</strong> utilizando operações elementares clássicas da Álgebra Linear.
+  </p>
+  <p>
+    O arquivo <code>matriz_definitiva4.c</code> contém todo o núcleo lógico do sistema:
+  </p>
+  <ul>
+    <li>✔ Estrutura de dados otimizada</li>
+    <li>✔ Criação/gerenciamento de matrizes</li>
+    <li>✔ Operações elementares</li>
+    <li>✔ Escalonamento (Gauss-Jordan) estável</li>
+    <li>✔ Leitura de múltiplas matrizes via arquivo</li>
+    <li>✔ Geração de matrizes aleatórias</li>
+    <li>✔ Interface textual interativa</li>
+  </ul>
+  <p>
+    Esse engine foi pensado como base para o <strong>PixeLab</strong>, um software maior que conecta Álgebra Linear ao processamento de imagens.
+  </p>
+  <p>
+    Segue o link do PixeLab: 
+    <a href="https://github.com/MisaelGo/PixeLab.git" target="_blank" rel="noopener noreferrer">
+      https://github.com/MisaelGo/PixeLab.git
+    </a>
+  </p>
+</div>
 
-Esse engine foi pensado como base para o PixeLab, um software maior que conecta Álgebra Linear ao processamento de imagens. Segue o Link do PixeLab: https://github.com/MisaelGo/PixeLab.git
+<hr>
 
-🧩 Estrutura Geral do Arquivo
-O código está organizado nas seguintes seções:
+<div>
+  <h2>🧩 Estrutura Geral do Arquivo</h2>
 
-1. Includes e defines
-Contém bibliotecas essenciais, constantes de limite (MATRIX_LIMIT) e EPSILON, usado para limpeza de números muito pequenos.
+  <h3>1. Includes e defines</h3>
+  <p>
+    Contém bibliotecas essenciais, constantes de limite (<code>MATRIX_LIMIT</code>) e 
+    <code>EPSILON</code>, usado para limpeza de números muito pequenos.
+  </p>
 
-2. Estrutura Matrix
-typedef struct {
+  <h3>2. Estrutura <code>Matrix</code></h3>
+  <pre><code>typedef struct {
     double** data;   // Ponteiros para cada linha
     double* block;   // Bloco contíguo de memória
     size_t linhas, colunas;
 } Matrix;
+</code></pre>
 
-Essa arquitetura traz BENEFÍCIOS: 
-- Acesso rápido (cache-friendly)
-- Fácil realocação e liberação de memória
-- Estrutura estável para operações intensivas
-- Facilita integração com kernels de convolução e imagens (no PixeLab).
+  <p>Essa arquitetura traz BENEFÍCIOS:</p>
+  <ul>
+    <li>Acesso rápido (cache-friendly)</li>
+    <li>Fácil realocação e liberação de memória</li>
+    <li>Estrutura estável para operações intensivas</li>
+    <li>Facilita integração com kernels de convolução e imagens (no PixeLab)</li>
+  </ul>
+</div>
 
-🏗 Funcionalidades Principais
-🔹 1. Criação e Destruição de Matrizes
-Funções: create_matrix() e free_matrix().
-Implementam uma alocação dupla: block contíguo para todos os valores, vetor de ponteiros apontando para cada linha. Isso combina performance e simplicidade.
+<hr>
 
-🔹 2. Inserção e Impressão
-ins_elem_matrix() e print_matrix()
-Permitem adicionar elementos e visualizar a matriz formatada.
+<div>
+  <h2>🏗 Funcionalidades Principais</h2>
 
-🔹 3. Operações Elementares
-a) Trocar Linhas: swap_rows()
-b) Multiplicar Linha por Escalar: scale_row() -> Possui lógica de limpeza automática: if (fabs(x) < EPSILON) x = 0.0;
-c) Soma de Linhas: add_rows() -> Implementa a operação: Li → Li + k * Lj
+  <h3>🔹 1. Criação e Destruição de Matrizes</h3>
+  <p>
+    Funções: <code>create_matrix()</code> e <code>free_matrix()</code>.<br>
+    Implementam uma alocação dupla: 
+  </p>
+  <ul>
+    <li><strong>block contíguo</strong> para todos os valores</li>
+    <li><strong>vetor de ponteiros</strong> apontando para cada linha</li>
+  </ul>
+  <p>Isso combina performance e simplicidade.</p>
 
-Essas três funções formam a base do método de Gauss-Jordan.
+  <h3>🔹 2. Inserção e Impressão</h3>
+  <p>
+    <code>ins_elem_matrix()</code> e <code>print_matrix()</code><br>
+    Permitem adicionar elementos e visualizar a matriz formatada.
+  </p>
 
-🔹 4. Escalonamento Completo – RREF
-A função to_rref(Matrix *m) faz: Busca do melhor pivô (find_pivot_row), troca de linhas se necessário, normalização do pivô, zerando acima e abaixo do pivô, passo até completar todas as colunas. É uma implementação estável, com busca de pivô por módulo (evita erros numéricos).
+  <h3>🔹 3. Operações Elementares</h3>
+  <ul>
+    <li><strong>a)</strong> Trocar Linhas: <code>swap_rows()</code></li>
+    <li>
+      <strong>b)</strong> Multiplicar Linha por Escalar: <code>scale_row()</code><br>
+      Possui lógica de limpeza automática:
+      <pre><code>if (fabs(x) &lt; EPSILON) x = 0.0;</code></pre>
+    </li>
+    <li>
+      <strong>c)</strong> Soma de Linhas: <code>add_rows()</code><br>
+      Implementa a operação:
+      <pre><code>Li → Li + k * Lj</code></pre>
+    </li>
+  </ul>
+  <p>Essas três funções formam a base do método de Gauss-Jordan.</p>
 
-🔹 5. Entrada/Interação com Usuário
-O menu permite: Trocar linhas, Multiplicar linha por escalar, Escalonar (Gauss-Jordan), Ler próxima matriz de arquivo, Finalizar e liberar memória. Isso transforma o programa em uma ferramenta manual de estudo e testes.
+  <h3>🔹 4. Escalonamento Completo – RREF</h3>
+  <p>
+    A função <code>to_rref(Matrix *m)</code> faz:
+  </p>
+  <ul>
+    <li>Busca do melhor pivô (<code>find_pivot_row</code>)</li>
+    <li>Troca de linhas se necessário</li>
+    <li>Normalização do pivô</li>
+    <li>Zera acima e abaixo do pivô</li>
+    <li>Itera até completar todas as colunas</li>
+  </ul>
+  <p>
+    É uma implementação estável, com busca de pivô por módulo (evita erros numéricos).
+  </p>
 
-🔹 6. Leitura de Matrizes de Arquivo
-ler_todas_as_matrizes(): Lê quantas matrizes existirem em matrizes.txt ou matrizes_rand.txt. Cria um vetor dinâmico contendo todas elas.
+  <h3>🔹 5. Entrada/Interação com Usuário</h3>
+  <p>O menu permite:</p>
+  <ul>
+    <li>Trocar linhas</li>
+    <li>Multiplicar linha por escalar</li>
+    <li>Escalonar (Gauss-Jordan)</li>
+    <li>Ler próxima matriz de arquivo</li>
+    <li>Finalizar e liberar memória</li>
+  </ul>
+  <p>
+    Isso transforma o programa em uma ferramenta manual de estudo e testes.
+  </p>
 
-🔹 7. Geração Aleatória de Matrizes
-Função gerador_matriz_aleatorio() gera: Número variável de matrizes, Dimensões aleatórias, Elementos aleatórios dentro de um intervalo, Escreve tudo em matrizes_rand.txt. É útil para testes automatizados.
+  <h3>🔹 6. Leitura de Matrizes de Arquivo</h3>
+  <p>
+    <code>ler_todas_as_matrizes()</code>: lê quantas matrizes existirem em 
+    <code>matrizes.txt</code> ou <code>matrizes_rand.txt</code>.<br>
+    Cria um vetor dinâmico contendo todas elas.
+  </p>
 
-🧠 Fluxo do Programa
-Quando executado,
-1) usuário escolhe: 
- - Matriz individual
- - Ler várias matrizes de arquivo
- - Gerar matrizes aleatórias
-2) O programa cria as matrizes e mostra um menu interativo
-3) Usuário manipula a matriz
-4) Pode escalonar para RREF
-5) Avança matrizes (se for leitura em lote)
-6) No fim, tudo é liberado da memória
+  <h3>🔹 7. Geração Aleatória de Matrizes</h3>
+  <p>
+    Função <code>gerador_matriz_aleatorio()</code> gera:
+  </p>
+  <ul>
+    <li>Número variável de matrizes</li>
+    <li>Dimensões aleatórias</li>
+    <li>Elementos aleatórios dentro de um intervalo</li>
+    <li>Escreve tudo em <code>matrizes_rand.txt</code></li>
+  </ul>
+  <p>É útil para testes automatizados.</p>
+</div>
 
-🧪 Testes e Estabilidade
-Recursos de estabilidade implementados: Normalização com EPSILON, Busca de melhor pivô (Método de pivotamento parcial), Limpeza de resíduos numéricos muito pequenos, Verificações de erro, Controle de limites e overflow. Isso garante que o escalonamento funcione mesmo para matrizes mal condicionadas.
+<hr>
 
-⚠ Limitações Conhecidas
-- Limite de elementos baseado em MATRIX_LIMIT
-- Apenas matrizes com números de ponto flutuante (double)
-- Não trata sistemas simbólicos
-- Não imprime frações (somente ponto flutuante)
-- Não salva o resultado em arquivo automaticamente
+<div>
+  <h2>🧠 Fluxo do Programa</h2>
+  <ol>
+    <li>Usuário escolhe:
+      <ul>
+        <li>Matriz individual</li>
+        <li>Ler várias matrizes de arquivo</li>
+        <li>Gerar matrizes aleatórias</li>
+      </ul>
+    </li>
+    <li>O programa cria as matrizes e mostra um menu interativo</li>
+    <li>Usuário manipula a matriz</li>
+    <li>Pode escalonar para RREF</li>
+    <li>Avança matrizes (se for leitura em lote)</li>
+    <li>No fim, tudo é liberado da memória</li>
+  </ol>
+</div>
 
-🎯 Casos de Uso
-Este arquivo é ideal para:
-✔ Estudos de Álgebra Linear
-✔ Sistemas lineares
-✔ Ensino de operações de linha
-✔ Implementações de Gauss-Jordan
-✔ Processamento de imagens (kernels 3×3 etc.)
-✔ Base para grafos matriciais
-✔ Cálculo numérico
-✔ Projeto PixeLab (versão de linha de comando)
+<hr>
 
-📄 Como Executar
-Compilação:
-gcc matriz_definitiva4.c -o matriz -lm
+<div>
+  <h2>🧪 Testes e Estabilidade</h2>
+  <p>Recursos de estabilidade implementados:</p>
+  <ul>
+    <li>Normalização com <code>EPSILON</code></li>
+    <li>Busca de melhor pivô (método de pivotamento parcial)</li>
+    <li>Limpeza de resíduos numéricos muito pequenos</li>
+    <li>Verificações de erro</li>
+    <li>Controle de limites e overflow</li>
+  </ul>
+  <p>
+    Isso garante que o escalonamento funcione mesmo para matrizes mal condicionadas.
+  </p>
+</div>
 
-Execução:
-./matriz
+<hr>
 
-📚 Arquivos Adicionais Suportados
-matrizes.txt
-matrizes_rand.txt
+<div>
+  <h2>⚠ Limitações Conhecidas</h2>
+  <ul>
+    <li>Limite de elementos baseado em <code>MATRIX_LIMIT</code></li>
+    <li>Apenas matrizes com números de ponto flutuante (<code>double</code>)</li>
+    <li>Não trata sistemas simbólicos</li>
+    <li>Não imprime frações (somente ponto flutuante)</li>
+    <li>Não salva o resultado em arquivo automaticamente</li>
+  </ul>
+</div>
 
-Formato do arquivo:
-3 3
+<hr>
+
+<div>
+  <h2>🎯 Casos de Uso</h2>
+  <p>Este arquivo é ideal para:</p>
+  <ul>
+    <li>✔ Estudos de Álgebra Linear</li>
+    <li>✔ Sistemas lineares</li>
+    <li>✔ Ensino de operações de linha</li>
+    <li>✔ Implementações de Gauss-Jordan</li>
+    <li>✔ Processamento de imagens (kernels 3×3 etc.)</li>
+    <li>✔ Base para grafos matriciais</li>
+    <li>✔ Cálculo numérico</li>
+    <li>✔ Projeto PixeLab (versão de linha de comando)</li>
+  </ul>
+</div>
+
+<hr>
+
+<div>
+  <h2>📄 Como Executar</h2>
+
+  <h3>Compilação</h3>
+  <pre><code>gcc matriz_definitiva4.c -o matriz -lm</code></pre>
+
+  <h3>Execução</h3>
+  <pre><code>./matriz</code></pre>
+</div>
+
+<hr>
+
+<div>
+  <h2>📚 Arquivos Adicionais Suportados</h2>
+  <ul>
+    <li><code>matrizes.txt</code></li>
+    <li><code>matrizes_rand.txt</code></li>
+  </ul>
+
+  <h3>Formato do arquivo:</h3>
+  <pre><code>3 3
 1 2 3
 4 5 6
 7 8 9
 2 2
 1 0
 0 1
+</code></pre>
+</div>
 
-⭐ Resumo Final
+<hr>
 
-main.c é um módulo completo, robusto e didático para manipulação matricial.
-Serve como:
-- Ferramenta educacional
-- Núcleo matemático do PixeLab
-- Base para aplicações científicas
-- Algoritmo confiável de Gauss-Jordan
+<div>
+  <h2>⭐ Resumo Final</h2>
+  <p>
+    <code>main.c</code> é um módulo completo, robusto e didático para manipulação matricial.
+  </p>
+  <p>Serve como:</p>
+  <ul>
+    <li>Ferramenta educacional</li>
+    <li>Núcleo matemático do PixeLab</li>
+    <li>Base para aplicações científicas</li>
+    <li>Algoritmo confiável de Gauss-Jordan</li>
+  </ul>
+</div>
 
