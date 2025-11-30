@@ -1,7 +1,7 @@
 <div align="center">
   <h1>📘 Escalonamento — Motor de Matrizes em C</h1>
   <p><strong>Implementação de operações elementares de matriz, escalonamento RREF e leitura de matrizes em C.</strong></p>
-  <p><strong>Arquivo principal:</strong> <code>main.c</code></p>
+  <p><strong>Arquivo principal:</strong> <code>matriz.c</code></p>
 </div>
 
 <hr>
@@ -10,7 +10,7 @@
   <h2>🧑‍💻 Contribuição (Equipe)</h2>
   <ul>
     <li><strong>Misael Gomes</strong> — Coordenador da equipe</li>
-    <li><strong>Vitor Santos &amp; Henrique Soares</strong> — Programadores do <code>main.c</code></li>
+    <li><strong>Vitor Santos &amp; Henrique Soares</strong> — Programadores do <code>matriz.c</code></li>
     <li><strong>Alyyson Landim</strong> — Suporte Matemático e testes</li>
   </ul>
 </div>
@@ -24,7 +24,7 @@
     <strong>redução por linhas (RREF – Reduced Row Echelon Form)</strong> utilizando operações elementares clássicas da Álgebra Linear.
   </p>
   <p>
-    O arquivo <code>matriz_definitiva4.c</code> contém todo o núcleo lógico do sistema:
+    O arquivo <code>matriz.c</code> contém todo o núcleo lógico do sistema:
   </p>
   <ul>
     <li>✔ Estrutura de dados otimizada</li>
@@ -233,7 +233,7 @@
   <h2>📄 Como Executar</h2>
 
   <h3>Compilação</h3>
-  <pre><code>gcc matriz_definitiva4.c -o matriz -lm</code></pre>
+  <pre><code>gcc matriz.c -o matriz -lm</code></pre>
 
   <h3>Execução</h3>
   <pre><code>./matriz</code></pre>
