@@ -11,7 +11,7 @@
   <ul>
     <li><strong>Misael Gomes</strong> — Coordenador da equipe</li>
     <li><strong>Vitor Santos &amp; Henrique Soares</strong> — Programadores do <code>main.c</code></li>
-    <li><strong>Alyyson</strong> — Suporte Matemático e testes</li>
+    <li><strong>Alyyson Landim</strong> — Suporte Matemático e testes</li>
   </ul>
 </div>
 
